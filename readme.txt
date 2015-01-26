@@ -7,5 +7,5 @@ https://developer.apple.com/library/prerelease/ios/samplecode/UsingPhotosFramewo
 2014-09-17.
 
 As this is a line-by-line translation from the original sample code, "redistribute the Apple Software in its entirety and without modifications" would apply. See LICENSE.txt .
-Some faults caused by my transaltion may exist. Not all features tested.
+Some faults caused by my translation may exist. Not all features tested.
 You should not contact to Apple or SHLab(jp) about any faults caused by my translation.
