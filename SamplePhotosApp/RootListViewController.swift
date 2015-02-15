@@ -45,20 +45,20 @@ class RootListViewController: UITableViewController, PHPhotoLibraryChangeObserve
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == AllPhotosSegue {
-            let assetGridViewController = segue.destinationViewController as AssetGridViewController
+            let assetGridViewController = segue.destinationViewController as! AssetGridViewController
             // Fetch all assets, sorted by date created.
             let options = PHFetchOptions()
             options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending:true)]
             assetGridViewController.assetsFetchResults = PHAsset.fetchAssetsWithOptions(options)
             
         } else if segue.identifier == CollectionSegue {
-            let assetGridViewController = segue.destinationViewController as AssetGridViewController
+            let assetGridViewController = segue.destinationViewController as! AssetGridViewController
             
-            let indexPath = self.tableView.indexPathForCell(sender as UITableViewCell)!
+            let indexPath = self.tableView.indexPathForCell(sender as! UITableViewCell)!
             let fetchResult = self.collectionsFetchResults[indexPath.section - 1] as PHFetchResult
-            let collection = fetchResult[indexPath.row] as PHCollection
+            let collection = fetchResult[indexPath.row] as! PHCollection
             if collection is PHAssetCollection {
-                let assetCollection = collection as PHAssetCollection
+                let assetCollection = collection as! PHAssetCollection
                 let assetsFetchResult = PHAsset.fetchAssetsInAssetCollection(assetCollection, options: nil)
                 assetGridViewController.assetsFetchResults = assetsFetchResult
                 assetGridViewController.assetCollection = assetCollection
@@ -88,12 +88,12 @@ class RootListViewController: UITableViewController, PHPhotoLibraryChangeObserve
         var localizedTitle: String
         
         if indexPath.section == 0 {
-            cell = tableView.dequeueReusableCellWithIdentifier(AllPhotosReuseIdentifier, forIndexPath: indexPath) as UITableViewCell
+            cell = tableView.dequeueReusableCellWithIdentifier(AllPhotosReuseIdentifier, forIndexPath: indexPath) as! UITableViewCell
             localizedTitle = NSLocalizedString("All Photos", comment: "")
         } else {
-            cell = tableView.dequeueReusableCellWithIdentifier(CollectionCellReuseIdentifier, forIndexPath: indexPath) as UITableViewCell
+            cell = tableView.dequeueReusableCellWithIdentifier(CollectionCellReuseIdentifier, forIndexPath: indexPath) as! UITableViewCell
             let fetchResult = self.collectionsFetchResults[indexPath.section - 1] as PHFetchResult
-            let collection = fetchResult[indexPath.row] as PHCollection
+            let collection = fetchResult[indexPath.row] as! PHCollection
             localizedTitle = collection.localizedTitle
         }
         cell.textLabel?.text = localizedTitle
@@ -146,7 +146,7 @@ class RootListViewController: UITableViewController, PHPhotoLibraryChangeObserve
             textField.placeholder = NSLocalizedString("Album Name", comment: "")
         }
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Create", comment: "") , style: .Default, handler: {action in
-            let textField = alertController.textFields!.first! as UITextField
+            let textField = alertController.textFields!.first! as! UITextField
             let title = textField.text
             
             // Create new album.

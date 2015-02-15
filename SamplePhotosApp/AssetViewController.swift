@@ -127,7 +127,7 @@ class AssetViewController: UIViewController, PHPhotoLibraryChangeObserver {
             let changeDetails = changeInstance.changeDetailsForObject(self.asset)
             if changeDetails != nil {
                 // it changed, we need to fetch a new one
-                self.asset = changeDetails.objectAfterChanges as PHAsset
+                self.asset = changeDetails.objectAfterChanges as! PHAsset
                 
                 if changeDetails.assetContentChanged {
                     self.updateImage()
@@ -191,7 +191,7 @@ class AssetViewController: UIViewController, PHPhotoLibraryChangeObserver {
                 PHPhotoLibrary.sharedPhotoLibrary().performChanges({
                     let request = PHAssetChangeRequest(forAsset: self.asset)
                     request.favorite = !self.asset.favorite
-                    }, { success, error in
+                    }, completionHandler: { success, error in
                         if !success {
                             NSLog("Error: %@", error)
                         }
@@ -211,7 +211,7 @@ class AssetViewController: UIViewController, PHPhotoLibraryChangeObserver {
                 PHPhotoLibrary.sharedPhotoLibrary().performChanges({
                     let request = PHAssetChangeRequest(forAsset: self.asset)
                     request.revertAssetContentToOriginal()
-                    }, {success, error in
+                    }, completionHandler: {success, error in
                         if !success {
                             NSLog("Error: %@", error)
                         }
@@ -220,7 +220,7 @@ class AssetViewController: UIViewController, PHPhotoLibraryChangeObserver {
         }
         alertController.modalPresentationStyle = .Popover
         self.presentViewController(alertController, animated: true, completion: nil)
-        alertController.popoverPresentationController?.barButtonItem = sender as UIBarButtonItem
+        alertController.popoverPresentationController?.barButtonItem = sender as! UIBarButtonItem
         alertController.popoverPresentationController?.permittedArrowDirections = .Up
     }
     

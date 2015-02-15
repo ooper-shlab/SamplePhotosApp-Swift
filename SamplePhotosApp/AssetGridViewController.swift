@@ -38,7 +38,7 @@ extension UICollectionView {
         if (allLayoutAttributes?.count ?? 0) == 0 {return []}
         var indexPaths: [NSIndexPath] = []
         indexPaths.reserveCapacity(allLayoutAttributes!.count)
-        for layoutAttributes in allLayoutAttributes as [UICollectionViewLayoutAttributes] {
+        for layoutAttributes in allLayoutAttributes as! [UICollectionViewLayoutAttributes] {
             let indexPath = layoutAttributes.indexPath
             indexPaths.append(indexPath)
         }
@@ -73,7 +73,7 @@ class AssetGridViewController: UICollectionViewController, PHPhotoLibraryChangeO
         super.viewWillAppear(animated)
         
         let scale = UIScreen.mainScreen().scale
-        let cellSize = (self.collectionViewLayout as UICollectionViewFlowLayout).itemSize
+        let cellSize = (self.collectionViewLayout as! UICollectionViewFlowLayout).itemSize
         My.AssetGridThumbnailSize = CGSizeMake(cellSize.width * scale, cellSize.height * scale)
         
         if self.assetCollection == nil || self.assetCollection.canPerformEditOperation(.AddContent) {
@@ -89,9 +89,9 @@ class AssetGridViewController: UICollectionViewController, PHPhotoLibraryChangeO
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        let indexPath = self.collectionView!.indexPathForCell(sender as UICollectionViewCell)!
-        let assetViewController = segue.destinationViewController as AssetViewController
-        assetViewController.asset = self.assetsFetchResults[indexPath.item] as PHAsset
+        let indexPath = self.collectionView!.indexPathForCell(sender as! UICollectionViewCell)!
+        let assetViewController = segue.destinationViewController as! AssetViewController
+        assetViewController.asset = self.assetsFetchResults[indexPath.item] as! PHAsset
         assetViewController.assetCollection = self.assetCollection
     }
     
@@ -145,13 +145,13 @@ class AssetGridViewController: UICollectionViewController, PHPhotoLibraryChangeO
     }
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CellReuseIdentifier, forIndexPath: indexPath) as GridViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CellReuseIdentifier, forIndexPath: indexPath) as! GridViewCell
         
         // Increment the cell's tag
         let currentTag = cell.tag + 1
         cell.tag = currentTag
         
-        let asset = self.assetsFetchResults[indexPath.item] as PHAsset
+        let asset = self.assetsFetchResults[indexPath.item] as! PHAsset
         self.imageManager.requestImageForAsset(asset,
             targetSize: My.AssetGridThumbnailSize,
             contentMode: .AspectFill,
@@ -254,7 +254,7 @@ class AssetGridViewController: UICollectionViewController, PHPhotoLibraryChangeO
         var assets: [PHAsset] = []
         assets.reserveCapacity(indexPaths.count)
         for indexPath in indexPaths {
-            let asset = self.assetsFetchResults[indexPath.item] as PHAsset
+            let asset = self.assetsFetchResults[indexPath.item] as! PHAsset
             assets.append(asset)
         }
         return assets
