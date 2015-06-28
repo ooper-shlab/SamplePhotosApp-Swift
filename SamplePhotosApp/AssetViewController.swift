@@ -29,10 +29,10 @@ extension CIImage {
             let eaglContext = EAGLContext(API: .OpenGLES2)
             My.ciContext = CIContext(EAGLContext: eaglContext)
         }
-        let outputImageRef = My.ciContext.createCGImage(self, fromRect: self.extent())
+        let outputImageRef = My.ciContext.createCGImage(self, fromRect: self.extent)
         let uiImage = UIImage(CGImage: outputImageRef, scale: 1.0, orientation: .Up)
         let jpegRepresentation = UIImageJPEGRepresentation(uiImage, compressionQuality)
-        return jpegRepresentation
+        return jpegRepresentation!
     }
 }
 
@@ -119,7 +119,7 @@ class AssetViewController: UIViewController, PHPhotoLibraryChangeObserver {
     
     //MARK: - PHPhotoLibraryChangeObserver
     
-    func photoLibraryDidChange(changeInstance: PHChange!) {
+    func photoLibraryDidChange(changeInstance: PHChange) {
         // Call might come on any background queue. Re-dispatch to the main queue to handle it.
         dispatch_async(dispatch_get_main_queue()) {
             
@@ -127,9 +127,9 @@ class AssetViewController: UIViewController, PHPhotoLibraryChangeObserver {
             let changeDetails = changeInstance.changeDetailsForObject(self.asset)
             if changeDetails != nil {
                 // it changed, we need to fetch a new one
-                self.asset = changeDetails.objectAfterChanges as! PHAsset
+                self.asset = changeDetails!.objectAfterChanges as! PHAsset
                 
-                if changeDetails.assetContentChanged {
+                if changeDetails!.assetContentChanged {
                     self.updateImage()
                     
                     if self.playerLayer != nil {
@@ -151,22 +151,22 @@ class AssetViewController: UIViewController, PHPhotoLibraryChangeObserver {
         }
         self.asset.requestContentEditingInputWithOptions(options) {contentEditingInput, info in
             // Get full image
-            let url = contentEditingInput.fullSizeImageURL
-            let orientation = contentEditingInput.fullSizeImageOrientation
-            var inputImage = CIImage(contentsOfURL: url, options: nil)
-            inputImage = inputImage.imageByApplyingOrientation(orientation)
+            let url = contentEditingInput!.fullSizeImageURL
+            let orientation = contentEditingInput!.fullSizeImageOrientation
+            var inputImage = CIImage(contentsOfURL: url!, options: nil)
+            inputImage = inputImage!.imageByApplyingOrientation(orientation)
             
             // Add filter
             let filter = CIFilter(name: filterName)
-            filter.setDefaults()
-            filter.setValue(inputImage, forKey: kCIInputImageKey)
-            let outputImage = filter.outputImage
+            filter!.setDefaults()
+            filter!.setValue(inputImage, forKey: kCIInputImageKey)
+            let outputImage = filter!.outputImage
             
             // Create editing output
             let jpegData = outputImage.aapl_jpegRepresentationWithCompressionQuality(0.9)
-            let adjustmentData = PHAdjustmentData(formatIdentifier: self.AdjustmentFormatIdentifier, formatVersion: "1.0", data: filterName.dataUsingEncoding(NSUTF8StringEncoding))
+            let adjustmentData = PHAdjustmentData(formatIdentifier: self.AdjustmentFormatIdentifier, formatVersion: "1.0", data: filterName.dataUsingEncoding(NSUTF8StringEncoding)!)
             
-            let contentEditingOutput = PHContentEditingOutput(contentEditingInput: contentEditingInput)
+            let contentEditingOutput = PHContentEditingOutput(contentEditingInput: contentEditingInput!)
             jpegData.writeToURL(contentEditingOutput.renderedContentURL, atomically: true)
             contentEditingOutput.adjustmentData = adjustmentData
             
@@ -175,13 +175,13 @@ class AssetViewController: UIViewController, PHPhotoLibraryChangeObserver {
                 request.contentEditingOutput = contentEditingOutput
                 }) {success, error in
                     if !success {
-                        NSLog("Error: %@", error)
+                        NSLog("Error: %@", error!)
                     }
             }
         }
     }
     
-    @IBAction func handleEditButtonItem(sender: AnyObject) {
+    @IBAction func handleEditButtonItem(sender: UIBarButtonItem) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Cancel, handler: nil))
         
@@ -193,7 +193,7 @@ class AssetViewController: UIViewController, PHPhotoLibraryChangeObserver {
                     request.favorite = !self.asset.favorite
                     }, completionHandler: { success, error in
                         if !success {
-                            NSLog("Error: %@", error)
+                            NSLog("Error: %@", error!)
                         }
                 })
                 })
@@ -213,34 +213,34 @@ class AssetViewController: UIViewController, PHPhotoLibraryChangeObserver {
                     request.revertAssetContentToOriginal()
                     }, completionHandler: {success, error in
                         if !success {
-                            NSLog("Error: %@", error)
+                            NSLog("Error: %@", error!)
                         }
                 })
                 })
         }
         alertController.modalPresentationStyle = .Popover
         self.presentViewController(alertController, animated: true, completion: nil)
-        alertController.popoverPresentationController?.barButtonItem = sender as! UIBarButtonItem
+        alertController.popoverPresentationController?.barButtonItem = sender
         alertController.popoverPresentationController?.permittedArrowDirections = .Up
     }
     
     @IBAction func handleTrashButtonItem(AnyObject) {
-        let completionHandler: (Bool, NSError!)->Void = {success, error in
+        let completionHandler: (Bool, NSError?)->Void = {success, error in
             if success {
                 dispatch_async(dispatch_get_main_queue()) {
                     self.navigationController?.popViewControllerAnimated(true)
                     return
                 }
             } else {
-                NSLog("Error: %@", error)
+                NSLog("Error: %@", error!)
             }
         }
         
         if self.assetCollection != nil {
             // Remove asset from album
             PHPhotoLibrary.sharedPhotoLibrary().performChanges({
-                let changeRequest = PHAssetCollectionChangeRequest(forAssetCollection: self.assetCollection)
-                changeRequest.removeAssets([self.asset])
+                let changeRequest = PHAssetCollectionChangeRequest(forAssetCollection: self.assetCollection!)
+                changeRequest!.removeAssets([self.asset])
                 }, completionHandler: completionHandler)
             
         } else {
@@ -257,7 +257,7 @@ class AssetViewController: UIViewController, PHPhotoLibraryChangeObserver {
             PHImageManager.defaultManager().requestAVAssetForVideo(self.asset, options: nil) {avAsset, audioMix, info in
                 dispatch_async(dispatch_get_main_queue()) {
                     if self.playerLayer != nil {
-                        let playerItem = AVPlayerItem(asset: avAsset)
+                        let playerItem = AVPlayerItem(asset: avAsset!)
                         playerItem.audioMix = audioMix
                         let player = AVPlayer(playerItem: playerItem)
                         let playerLayer = AVPlayerLayer(player: player)
@@ -272,7 +272,7 @@ class AssetViewController: UIViewController, PHPhotoLibraryChangeObserver {
             }
             
         } else {
-            self.playerLayer!.player.play()
+            self.playerLayer!.player!.play()
         }
         
     }

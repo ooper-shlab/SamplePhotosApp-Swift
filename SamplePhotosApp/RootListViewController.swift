@@ -88,13 +88,13 @@ class RootListViewController: UITableViewController, PHPhotoLibraryChangeObserve
         var localizedTitle: String
         
         if indexPath.section == 0 {
-            cell = tableView.dequeueReusableCellWithIdentifier(AllPhotosReuseIdentifier, forIndexPath: indexPath) as! UITableViewCell
+            cell = tableView.dequeueReusableCellWithIdentifier(AllPhotosReuseIdentifier, forIndexPath: indexPath) as UITableViewCell
             localizedTitle = NSLocalizedString("All Photos", comment: "")
         } else {
-            cell = tableView.dequeueReusableCellWithIdentifier(CollectionCellReuseIdentifier, forIndexPath: indexPath) as! UITableViewCell
+            cell = tableView.dequeueReusableCellWithIdentifier(CollectionCellReuseIdentifier, forIndexPath: indexPath) as UITableViewCell
             let fetchResult = self.collectionsFetchResults[indexPath.section - 1] as PHFetchResult
             let collection = fetchResult[indexPath.row] as! PHCollection
-            localizedTitle = collection.localizedTitle
+            localizedTitle = collection.localizedTitle!
         }
         cell.textLabel?.text = localizedTitle
         
@@ -111,7 +111,7 @@ class RootListViewController: UITableViewController, PHPhotoLibraryChangeObserve
     
     //MARK: - PHPhotoLibraryChangeObserver
     
-    func photoLibraryDidChange(changeInstance: PHChange!) {
+    func photoLibraryDidChange(changeInstance: PHChange) {
         // Call might come on any background queue. Re-dispatch to the main queue to handle it.
         dispatch_async(dispatch_get_main_queue()) {
             
@@ -123,8 +123,8 @@ class RootListViewController: UITableViewController, PHPhotoLibraryChangeObserve
                     if updatedCollectionsFetchResults.isEmpty {
                         updatedCollectionsFetchResults = self.collectionsFetchResults
                     }
-                    let index = find(self.collectionsFetchResults, collectionsFetchResult)
-                    updatedCollectionsFetchResults[index!] = changeDetails.fetchResultAfterChanges
+                    let index = self.collectionsFetchResults.indexOf(collectionsFetchResult)
+                    updatedCollectionsFetchResults[index!] = changeDetails!.fetchResultAfterChanges
                 }
             }
             
@@ -146,16 +146,16 @@ class RootListViewController: UITableViewController, PHPhotoLibraryChangeObserve
             textField.placeholder = NSLocalizedString("Album Name", comment: "")
         }
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Create", comment: "") , style: .Default, handler: {action in
-            let textField = alertController.textFields!.first! as! UITextField
+            let textField = alertController.textFields!.first! as UITextField
             let title = textField.text
             
             // Create new album.
             PHPhotoLibrary.sharedPhotoLibrary().performChanges({
-                PHAssetCollectionChangeRequest.creationRequestForAssetCollectionWithTitle(title)
+                PHAssetCollectionChangeRequest.creationRequestForAssetCollectionWithTitle(title!)
                 return
                 }, completionHandler: {success, error in
                     if !success {
-                        NSLog("Error creating album: %@", error)
+                        NSLog("Error creating album: %@", error!)
                     }
             })
         }))

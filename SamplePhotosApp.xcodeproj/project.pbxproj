@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		11A9AC6A193531AE00C5AC7F /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11A9AC69193531AE00C5AC7F /* Storyboard.storyboard */; };
 		A7CF22D71933ED8900E6E88E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7CF22D61933ED8900E6E88E /* Images.xcassets */; };
+		D713E9251B409383000CBA45 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D713E9241B409383000CBA45 /* LaunchScreen.storyboard */; };
 		D76D9C311A752D37003276E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76D9C301A752D37003276E8 /* AppDelegate.swift */; };
 		D76D9C321A7531E6003276E8 /* RootListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72E64E01A73E54300C4D158 /* RootListViewController.swift */; };
 		D76D9C331A75320E003276E8 /* AssetGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72E64DE1A73D20C00C4D158 /* AssetGridViewController.swift */; };
@@ -22,6 +23,7 @@
 		A7CF22CC1933ED8900E6E88E /* SamplePhotosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SamplePhotosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7CF22D01933ED8900E6E88E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A7CF22D61933ED8900E6E88E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		D713E9241B409383000CBA45 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D72E64DA1A73A5D000C4D158 /* AssetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetViewController.swift; sourceTree = "<group>"; };
 		D72E64DE1A73D20C00C4D158 /* AssetGridViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetGridViewController.swift; sourceTree = "<group>"; };
 		D72E64E01A73E54300C4D158 /* RootListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootListViewController.swift; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 		A7CF22CE1933ED8900E6E88E /* SamplePhotosApp */ = {
 			isa = PBXGroup;
 			children = (
+				D713E9241B409383000CBA45 /* LaunchScreen.storyboard */,
 				D76D9C301A752D37003276E8 /* AppDelegate.swift */,
 				D72E64E01A73E54300C4D158 /* RootListViewController.swift */,
 				D72E64DE1A73D20C00C4D158 /* AssetGridViewController.swift */,
@@ -110,7 +113,8 @@
 		A7CF22C41933ED8900E6E88E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				TargetAttributes = {
 					A7CF22CB1933ED8900E6E88E = {
 						CreatedOnToolsVersion = 6.0;
@@ -139,6 +143,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D713E9251B409383000CBA45 /* LaunchScreen.storyboard in Resources */,
 				A7CF22D71933ED8900E6E88E /* Images.xcassets in Resources */,
 				11A9AC6A193531AE00C5AC7F /* Storyboard.storyboard in Resources */,
 			);
@@ -183,6 +188,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -250,6 +256,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = SamplePhotosApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -263,6 +270,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = SamplePhotosApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

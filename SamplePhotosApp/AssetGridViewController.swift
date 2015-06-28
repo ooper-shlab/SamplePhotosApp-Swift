@@ -38,7 +38,7 @@ extension UICollectionView {
         if (allLayoutAttributes?.count ?? 0) == 0 {return []}
         var indexPaths: [NSIndexPath] = []
         indexPaths.reserveCapacity(allLayoutAttributes!.count)
-        for layoutAttributes in allLayoutAttributes as! [UICollectionViewLayoutAttributes] {
+        for layoutAttributes in allLayoutAttributes! {
             let indexPath = layoutAttributes.indexPath
             indexPaths.append(indexPath)
         }
@@ -97,7 +97,7 @@ class AssetGridViewController: UICollectionViewController, PHPhotoLibraryChangeO
     
     //MARK: - PHPhotoLibraryChangeObserver
     
-    func photoLibraryDidChange(changeInstance: PHChange!) {
+    func photoLibraryDidChange(changeInstance: PHChange) {
         // Call might come on any background queue. Re-dispatch to the main queue to handle it.
         dispatch_async(dispatch_get_main_queue()) {
             
@@ -117,17 +117,17 @@ class AssetGridViewController: UICollectionViewController, PHPhotoLibraryChangeO
                 } else {
                     // if we have incremental diffs, tell the collection view to animate insertions and deletions
                     collectionView.performBatchUpdates({
-                        let removedIndexes = collectionChanges.removedIndexes
+                        let removedIndexes = collectionChanges!.removedIndexes
                         if (removedIndexes?.count ?? 0) != 0 {
-                            collectionView.deleteItemsAtIndexPaths(removedIndexes.aapl_indexPathsFromIndexesWithSection(0))
+                            collectionView.deleteItemsAtIndexPaths(removedIndexes!.aapl_indexPathsFromIndexesWithSection(0))
                         }
-                        let insertedIndexes = collectionChanges.insertedIndexes
+                        let insertedIndexes = collectionChanges!.insertedIndexes
                         if (insertedIndexes?.count ?? 0) != 0 {
-                            collectionView.insertItemsAtIndexPaths(insertedIndexes.aapl_indexPathsFromIndexesWithSection(0))
+                            collectionView.insertItemsAtIndexPaths(insertedIndexes!.aapl_indexPathsFromIndexesWithSection(0))
                         }
-                        let changedIndexes = collectionChanges.changedIndexes
-                        if changedIndexes.count != 0 {
-                            collectionView.reloadItemsAtIndexPaths(changedIndexes.aapl_indexPathsFromIndexesWithSection(0))
+                        let changedIndexes = collectionChanges!.changedIndexes
+                        if changedIndexes!.count != 0 {
+                            collectionView.reloadItemsAtIndexPaths(changedIndexes!.aapl_indexPathsFromIndexesWithSection(0))
                         }
                         }, completion: nil)
                 }
@@ -267,7 +267,7 @@ class AssetGridViewController: UICollectionViewController, PHPhotoLibraryChangeO
         let rect = rand() % 2 == 0 ? CGRectMake(0, 0, 400, 300) : CGRectMake(0, 0, 300, 400)
         UIGraphicsBeginImageContextWithOptions(rect.size, false, 1.0)
         UIColor(hue: CGFloat((rand() % 100) / 100), saturation: 1.0, brightness: 1.0, alpha: 1.0).setFill()
-        UIRectFillUsingBlendMode(rect, kCGBlendModeNormal)
+        UIRectFillUsingBlendMode(rect, CGBlendMode.Normal)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
@@ -277,11 +277,11 @@ class AssetGridViewController: UICollectionViewController, PHPhotoLibraryChangeO
             
             if self.assetCollection != nil {
                 let assetCollectionChangeRequest = PHAssetCollectionChangeRequest(forAssetCollection: self.assetCollection)
-                assetCollectionChangeRequest.addAssets([assetChangeRequest.placeholderForCreatedAsset])
+                assetCollectionChangeRequest!.addAssets([assetChangeRequest.placeholderForCreatedAsset!])
             }
             }, completionHandler: {success, error in
                 if !success {
-                    NSLog("Error creating asset: %@", error)
+                    NSLog("Error creating asset: %@", error!)
                 }
         })
     }
