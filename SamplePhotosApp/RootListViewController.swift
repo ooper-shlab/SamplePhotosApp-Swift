@@ -138,7 +138,7 @@ class RootListViewController: UITableViewController, PHPhotoLibraryChangeObserve
     
     //MARK: - Actions
     
-    @IBAction func handleAddButtonItem(AnyObject) {
+    @IBAction func handleAddButtonItem(_: AnyObject) {
         // Prompt user from new album title.
         let alertController = UIAlertController(title: NSLocalizedString("New Album", comment: ""), message: nil, preferredStyle: .Alert)
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Cancel, handler: nil))

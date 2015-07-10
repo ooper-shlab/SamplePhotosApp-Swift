@@ -224,7 +224,7 @@ class AssetViewController: UIViewController, PHPhotoLibraryChangeObserver {
         alertController.popoverPresentationController?.permittedArrowDirections = .Up
     }
     
-    @IBAction func handleTrashButtonItem(AnyObject) {
+    @IBAction func handleTrashButtonItem(_: AnyObject) {
         let completionHandler: (Bool, NSError?)->Void = {success, error in
             if success {
                 dispatch_async(dispatch_get_main_queue()) {
@@ -252,7 +252,7 @@ class AssetViewController: UIViewController, PHPhotoLibraryChangeObserver {
         }
     }
     
-    @IBAction func handlePlayButtonItem(AnyObject) {
+    @IBAction func handlePlayButtonItem(_: AnyObject) {
         if self.playerLayer == nil {
             PHImageManager.defaultManager().requestAVAssetForVideo(self.asset, options: nil) {avAsset, audioMix, info in
                 dispatch_async(dispatch_get_main_queue()) {
