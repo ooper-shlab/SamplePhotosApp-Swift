@@ -163,7 +163,7 @@ class AssetViewController: UIViewController, PHPhotoLibraryChangeObserver {
             let outputImage = filter!.outputImage
             
             // Create editing output
-            let jpegData = outputImage.aapl_jpegRepresentationWithCompressionQuality(0.9)
+            let jpegData = outputImage!.aapl_jpegRepresentationWithCompressionQuality(0.9)
             let adjustmentData = PHAdjustmentData(formatIdentifier: self.AdjustmentFormatIdentifier, formatVersion: "1.0", data: filterName.dataUsingEncoding(NSUTF8StringEncoding)!)
             
             let contentEditingOutput = PHContentEditingOutput(contentEditingInput: contentEditingInput!)
