@@ -2,39 +2,46 @@
 //  AAPLRootListViewController.swift
 //  SamplePhotosApp
 //
-//  Translated by OOPer in cooperation with shlab.jp, on 2015/1/25.
+//  Translated by OOPer in cooperation with shlab.jp, on 2015/10/25.
 //
 //
 /*
- Copyright (C) 2014 Apple Inc. All Rights Reserved.
+ Copyright (C) 2015 Apple Inc. All Rights Reserved.
  See LICENSE.txt for this sample’s licensing information
 
  Abstract:
-
-  The view controller displaying the root list of the app.
-
+ The view controller displaying the root list of the app.
  */
 
 import UIKit
 import Photos
 
+private let AllPhotosReuseIdentifier = "AllPhotosCell"
+private let CollectionCellReuseIdentifier = "CollectionCell"
+
+private let AllPhotosSegue = "showAllPhotos"
+private let CollectionSegue = "showCollection"
+
 @objc(AAPLRootListViewController)
 class RootListViewController: UITableViewController, PHPhotoLibraryChangeObserver {
     
-    var collectionsFetchResults: [PHFetchResult] = []
-    var collectionsLocalizedTitles: [String] = []
     
-    private final let AllPhotosReuseIdentifier = "AllPhotosCell"
-    private final let CollectionCellReuseIdentifier = "CollectionCell"
-    
-    private final let AllPhotosSegue = "showAllPhotos"
-    private final let CollectionSegue = "showCollection"
+    private var sectionFetchResults: [PHFetchResult] = []
+    private var sectionLocalizedTitles: [String] = []
     
     override func awakeFromNib() {
+        // Create a PHFetchResult object for each section in the table view.
+        let allPhotosOptions = PHFetchOptions()
+        allPhotosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+        let allPhotos = PHAsset.fetchAssetsWithOptions(allPhotosOptions)
+        
         let smartAlbums = PHAssetCollection.fetchAssetCollectionsWithType(.SmartAlbum, subtype: .AlbumRegular, options: nil)
+        
         let topLevelUserCollections = PHCollectionList.fetchTopLevelUserCollectionsWithOptions(nil)
-        self.collectionsFetchResults = [smartAlbums, topLevelUserCollections]
-        self.collectionsLocalizedTitles = [NSLocalizedString("Smart Albums", comment: ""), NSLocalizedString("Albums", comment: "")]
+        
+        // Store the PHFetchResult objects and localized titles for each section.
+        self.sectionFetchResults = [allPhotos, smartAlbums, topLevelUserCollections]
+        self.sectionLocalizedTitles = ["", NSLocalizedString("Smart Albums", comment: ""), NSLocalizedString("Albums", comment: "")]
         
         PHPhotoLibrary.sharedPhotoLibrary().registerChangeObserver(self)
     }
@@ -43,93 +50,106 @@ class RootListViewController: UITableViewController, PHPhotoLibraryChangeObserve
         PHPhotoLibrary.sharedPhotoLibrary().unregisterChangeObserver(self)
     }
     
+    //MARK: - UIViewController
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        /*
+        Get the AAPLAssetGridViewController being pushed and the UITableViewCell
+        that triggered the segue.
+        */
+        guard let
+            assetGridViewController = segue.destinationViewController as? AssetGridViewController,
+            cell = sender as? UITableViewCell
+            else {
+                return
+        }
+        
+        // Set the title of the AAPLAssetGridViewController.
+        assetGridViewController.title = cell.textLabel?.text
+        
+        // Get the PHFetchResult for the selected section.
+        let indexPath = self.tableView.indexPathForCell(cell)!
+        let fetchResult = self.sectionFetchResults[indexPath.section]
+        
         if segue.identifier == AllPhotosSegue {
-            let assetGridViewController = segue.destinationViewController as! AssetGridViewController
-            // Fetch all assets, sorted by date created.
-            let options = PHFetchOptions()
-            options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending:true)]
-            assetGridViewController.assetsFetchResults = PHAsset.fetchAssetsWithOptions(options)
-            
+            assetGridViewController.assetsFetchResults = fetchResult
         } else if segue.identifier == CollectionSegue {
-            let assetGridViewController = segue.destinationViewController as! AssetGridViewController
-            
-            let indexPath = self.tableView.indexPathForCell(sender as! UITableViewCell)!
-            let fetchResult = self.collectionsFetchResults[indexPath.section - 1] as PHFetchResult
-            let collection = fetchResult[indexPath.row] as! PHCollection
-            if collection is PHAssetCollection {
-                let assetCollection = collection as! PHAssetCollection
-                let assetsFetchResult = PHAsset.fetchAssetsInAssetCollection(assetCollection, options: nil)
-                assetGridViewController.assetsFetchResults = assetsFetchResult
-                assetGridViewController.assetCollection = assetCollection
+            // Get the PHAssetCollection for the selected row.
+            guard let assetCollection = fetchResult[indexPath.row] as? PHAssetCollection else {
+                return
             }
+            
+            // Configure the AAPLAssetGridViewController with the asset collection.
+            let assetsFetchResult = PHAsset.fetchAssetsInAssetCollection(assetCollection, options: nil)
+            
+            assetGridViewController.assetsFetchResults = assetsFetchResult
+            assetGridViewController.assetCollection = assetCollection
         }
     }
     
     //MARK: - UITableViewDataSource
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1 + self.collectionsFetchResults.count
+        return self.sectionFetchResults.count
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var numberOfRows = 0
+        
         if section == 0 {
-            numberOfRows = 1 // "All Photos" section
+            // The "All Photos" section only ever has a single row.
+            numberOfRows = 1
         } else {
-            let fetchResult = self.collectionsFetchResults[section - 1] as PHFetchResult
+            let fetchResult = self.sectionFetchResults[section]
             numberOfRows = fetchResult.count
         }
+        
         return numberOfRows
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: UITableViewCell
-        var localizedTitle: String
+        let cell: UITableViewCell
         
         if indexPath.section == 0 {
-            cell = tableView.dequeueReusableCellWithIdentifier(AllPhotosReuseIdentifier, forIndexPath: indexPath) as UITableViewCell
-            localizedTitle = NSLocalizedString("All Photos", comment: "")
+            cell = tableView.dequeueReusableCellWithIdentifier(AllPhotosReuseIdentifier, forIndexPath: indexPath)
+            cell.textLabel!.text = NSLocalizedString("All Photos", comment: "")
         } else {
-            cell = tableView.dequeueReusableCellWithIdentifier(CollectionCellReuseIdentifier, forIndexPath: indexPath) as UITableViewCell
-            let fetchResult = self.collectionsFetchResults[indexPath.section - 1] as PHFetchResult
+            let fetchResult = self.sectionFetchResults[indexPath.section]
             let collection = fetchResult[indexPath.row] as! PHCollection
-            localizedTitle = collection.localizedTitle!
+            
+            cell = tableView.dequeueReusableCellWithIdentifier(CollectionCellReuseIdentifier, forIndexPath: indexPath)
+            cell.textLabel!.text = collection.localizedTitle
         }
-        cell.textLabel?.text = localizedTitle
         
         return cell
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        var title: String? = nil
-        if section > 0 {
-            title = self.collectionsLocalizedTitles[section - 1]
-        }
-        return title
+        return self.sectionLocalizedTitles[section]
     }
     
     //MARK: - PHPhotoLibraryChangeObserver
     
     func photoLibraryDidChange(changeInstance: PHChange) {
-        // Call might come on any background queue. Re-dispatch to the main queue to handle it.
+        /*
+        Change notifications may be made on a background queue. Re-dispatch to the
+        main queue before acting on the change as we'll be updating the UI.
+        */
         dispatch_async(dispatch_get_main_queue()) {
+            // Loop through the section fetch results, replacing any fetch results that have been updated.
+            var updatedSectionFetchResults = self.sectionFetchResults
+            var reloadRequired = false
             
-            var updatedCollectionsFetchResults: [PHFetchResult] = []
-            
-            for collectionsFetchResult in self.collectionsFetchResults {
-                let changeDetails = changeInstance.changeDetailsForFetchResult(collectionsFetchResult)
-                if changeDetails != nil {
-                    if updatedCollectionsFetchResults.isEmpty {
-                        updatedCollectionsFetchResults = self.collectionsFetchResults
-                    }
-                    let index = self.collectionsFetchResults.indexOf(collectionsFetchResult)
-                    updatedCollectionsFetchResults[index!] = changeDetails!.fetchResultAfterChanges
+            self.sectionFetchResults.enumerate().forEach{index, collectionsFetchResult in
+                if let changeDetails = changeInstance.changeDetailsForFetchResult(collectionsFetchResult) {
+                    
+                    updatedSectionFetchResults[index] = changeDetails.fetchResultAfterChanges
+                    reloadRequired = true
                 }
             }
             
-            if !updatedCollectionsFetchResults.isEmpty {
-                self.collectionsFetchResults = updatedCollectionsFetchResults
+            if reloadRequired {
+                self.sectionFetchResults = updatedSectionFetchResults
                 self.tableView.reloadData()
             }
             
@@ -141,24 +161,28 @@ class RootListViewController: UITableViewController, PHPhotoLibraryChangeObserve
     @IBAction func handleAddButtonItem(_: AnyObject) {
         // Prompt user from new album title.
         let alertController = UIAlertController(title: NSLocalizedString("New Album", comment: ""), message: nil, preferredStyle: .Alert)
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Cancel, handler: nil))
-        alertController.addTextFieldWithConfigurationHandler {textField in
+        
+        alertController.addTextFieldWithConfigurationHandler{textField in
             textField.placeholder = NSLocalizedString("Album Name", comment: "")
         }
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("Create", comment: "") , style: .Default, handler: {action in
-            let textField = alertController.textFields!.first! as UITextField
-            let title = textField.text
-            
-            // Create new album.
-            PHPhotoLibrary.sharedPhotoLibrary().performChanges({
-                PHAssetCollectionChangeRequest.creationRequestForAssetCollectionWithTitle(title!)
+        
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Cancel, handler: nil))
+        
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("Create", comment: ""), style: .Default) {action in
+            let textField = alertController.textFields![0]
+            guard let title = textField.text where !title.isEmpty else {
                 return
+            }
+            
+            // Create a new album with the title entered.
+            PHPhotoLibrary.sharedPhotoLibrary().performChanges({
+                PHAssetCollectionChangeRequest.creationRequestForAssetCollectionWithTitle(title)
                 }, completionHandler: {success, error in
                     if !success {
                         NSLog("Error creating album: %@", error!)
                     }
             })
-        }))
+            })
         
         self.presentViewController(alertController, animated: true, completion: nil)
     }

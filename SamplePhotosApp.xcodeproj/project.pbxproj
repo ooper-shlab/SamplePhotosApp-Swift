@@ -8,29 +8,35 @@
 
 /* Begin PBXBuildFile section */
 		11A9AC6A193531AE00C5AC7F /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11A9AC69193531AE00C5AC7F /* Storyboard.storyboard */; };
+		42B1025C1BB0925000553A16 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42B1025B1BB0925000553A16 /* Launch Screen.storyboard */; };
 		A7CF22D71933ED8900E6E88E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7CF22D61933ED8900E6E88E /* Images.xcassets */; };
-		D713E9251B409383000CBA45 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D713E9241B409383000CBA45 /* LaunchScreen.storyboard */; };
-		D76D9C311A752D37003276E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76D9C301A752D37003276E8 /* AppDelegate.swift */; };
-		D76D9C321A7531E6003276E8 /* RootListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72E64E01A73E54300C4D158 /* RootListViewController.swift */; };
-		D76D9C331A75320E003276E8 /* AssetGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72E64DE1A73D20C00C4D158 /* AssetGridViewController.swift */; };
-		D76D9C341A753213003276E8 /* AssetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72E64DA1A73A5D000C4D158 /* AssetViewController.swift */; };
-		D7E634361A73A4FA008262D2 /* GridViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E634331A73A225008262D2 /* GridViewCell.swift */; };
+		D7B1FD371BDC9071006B17C2 /* CIImage+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B1FD361BDC9071006B17C2 /* CIImage+Convenience.swift */; };
+		D7B99D4D1BDBE08B000DE794 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B99D481BDBE08B000DE794 /* AppDelegate.swift */; };
+		D7B99D4F1BDBE08C000DE794 /* AssetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B99D4A1BDBE08B000DE794 /* AssetViewController.swift */; };
+		D7B99D501BDBE08C000DE794 /* GridViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B99D4B1BDBE08B000DE794 /* GridViewCell.swift */; };
+		D7B99D511BDBE08C000DE794 /* RootListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B99D4C1BDBE08B000DE794 /* RootListViewController.swift */; };
+		D7B99D6A1BDC740E000DE794 /* NSIndexSet+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B99D691BDC740E000DE794 /* NSIndexSet+Convenience.swift */; };
+		D7B99D6C1BDC751E000DE794 /* UICollectionView+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B99D6B1BDC751E000DE794 /* UICollectionView+Convenience.swift */; };
+		D7F2DAB01BDCB89400560724 /* AssetGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B99D491BDBE08B000DE794 /* AssetGridViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		11A9AC69193531AE00C5AC7F /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+		42B1025B1BB0925000553A16 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		A738785B1989954300D76B24 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A7CF22CC1933ED8900E6E88E /* SamplePhotosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SamplePhotosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7CF22D01933ED8900E6E88E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A7CF22D61933ED8900E6E88E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		D713E9241B409383000CBA45 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		D72E64DA1A73A5D000C4D158 /* AssetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetViewController.swift; sourceTree = "<group>"; };
-		D72E64DE1A73D20C00C4D158 /* AssetGridViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetGridViewController.swift; sourceTree = "<group>"; };
-		D72E64E01A73E54300C4D158 /* RootListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootListViewController.swift; sourceTree = "<group>"; };
-		D76D9C301A752D37003276E8 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D76D9C351A75357F003276E8 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
-		D76D9C371A753DBA003276E8 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
-		D7E634331A73A225008262D2 /* GridViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridViewCell.swift; sourceTree = "<group>"; };
+		D7B1FD361BDC9071006B17C2 /* CIImage+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CIImage+Convenience.swift"; sourceTree = "<group>"; };
+		D7B99D441BDBE010000DE794 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		D7B99D451BDBE010000DE794 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
+		D7B99D481BDBE08B000DE794 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D7B99D491BDBE08B000DE794 /* AssetGridViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetGridViewController.swift; sourceTree = "<group>"; };
+		D7B99D4A1BDBE08B000DE794 /* AssetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetViewController.swift; sourceTree = "<group>"; };
+		D7B99D4B1BDBE08B000DE794 /* GridViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridViewCell.swift; sourceTree = "<group>"; };
+		D7B99D4C1BDBE08B000DE794 /* RootListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootListViewController.swift; sourceTree = "<group>"; };
+		D7B99D691BDC740E000DE794 /* NSIndexSet+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSIndexSet+Convenience.swift"; sourceTree = "<group>"; };
+		D7B99D6B1BDC751E000DE794 /* UICollectionView+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Convenience.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,8 +53,8 @@
 		A7CF22C31933ED8900E6E88E = {
 			isa = PBXGroup;
 			children = (
-				D76D9C371A753DBA003276E8 /* readme.txt */,
-				D76D9C351A75357F003276E8 /* LICENSE.txt */,
+				D7B99D441BDBE010000DE794 /* LICENSE.txt */,
+				D7B99D451BDBE010000DE794 /* readme.txt */,
 				A738785B1989954300D76B24 /* README.md */,
 				A7CF22CE1933ED8900E6E88E /* SamplePhotosApp */,
 				A7CF22CD1933ED8900E6E88E /* Products */,
@@ -66,15 +72,16 @@
 		A7CF22CE1933ED8900E6E88E /* SamplePhotosApp */ = {
 			isa = PBXGroup;
 			children = (
-				D713E9241B409383000CBA45 /* LaunchScreen.storyboard */,
-				D76D9C301A752D37003276E8 /* AppDelegate.swift */,
-				D72E64E01A73E54300C4D158 /* RootListViewController.swift */,
-				D72E64DE1A73D20C00C4D158 /* AssetGridViewController.swift */,
-				D72E64DA1A73A5D000C4D158 /* AssetViewController.swift */,
-				D7E634331A73A225008262D2 /* GridViewCell.swift */,
+				D7B99D481BDBE08B000DE794 /* AppDelegate.swift */,
+				D7B99D4C1BDBE08B000DE794 /* RootListViewController.swift */,
+				D7B99D491BDBE08B000DE794 /* AssetGridViewController.swift */,
+				D7B99D4A1BDBE08B000DE794 /* AssetViewController.swift */,
+				D7B99D4B1BDBE08B000DE794 /* GridViewCell.swift */,
 				11A9AC69193531AE00C5AC7F /* Storyboard.storyboard */,
 				A7CF22D61933ED8900E6E88E /* Images.xcassets */,
+				B53F83891BB15A3600BE25D4 /* Convenience Categories */,
 				A7CF22CF1933ED8900E6E88E /* Supporting Files */,
+				42B1025B1BB0925000553A16 /* Launch Screen.storyboard */,
 			);
 			path = SamplePhotosApp;
 			sourceTree = "<group>";
@@ -85,6 +92,16 @@
 				A7CF22D01933ED8900E6E88E /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B53F83891BB15A3600BE25D4 /* Convenience Categories */ = {
+			isa = PBXGroup;
+			children = (
+				D7B1FD361BDC9071006B17C2 /* CIImage+Convenience.swift */,
+				D7B99D691BDC740E000DE794 /* NSIndexSet+Convenience.swift */,
+				D7B99D6B1BDC751E000DE794 /* UICollectionView+Convenience.swift */,
+			);
+			name = "Convenience Categories";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -113,8 +130,7 @@
 		A7CF22C41933ED8900E6E88E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0710;
 				TargetAttributes = {
 					A7CF22CB1933ED8900E6E88E = {
 						CreatedOnToolsVersion = 6.0;
@@ -143,7 +159,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D713E9251B409383000CBA45 /* LaunchScreen.storyboard in Resources */,
+				42B1025C1BB0925000553A16 /* Launch Screen.storyboard in Resources */,
 				A7CF22D71933ED8900E6E88E /* Images.xcassets in Resources */,
 				11A9AC6A193531AE00C5AC7F /* Storyboard.storyboard in Resources */,
 			);
@@ -156,11 +172,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D7E634361A73A4FA008262D2 /* GridViewCell.swift in Sources */,
-				D76D9C331A75320E003276E8 /* AssetGridViewController.swift in Sources */,
-				D76D9C341A753213003276E8 /* AssetViewController.swift in Sources */,
-				D76D9C311A752D37003276E8 /* AppDelegate.swift in Sources */,
-				D76D9C321A7531E6003276E8 /* RootListViewController.swift in Sources */,
+				D7F2DAB01BDCB89400560724 /* AssetGridViewController.swift in Sources */,
+				D7B99D6A1BDC740E000DE794 /* NSIndexSet+Convenience.swift in Sources */,
+				D7B1FD371BDC9071006B17C2 /* CIImage+Convenience.swift in Sources */,
+				D7B99D501BDBE08C000DE794 /* GridViewCell.swift in Sources */,
+				D7B99D6C1BDC751E000DE794 /* UICollectionView+Convenience.swift in Sources */,
+				D7B99D4F1BDBE08C000DE794 /* AssetViewController.swift in Sources */,
+				D7B99D4D1BDBE08B000DE794 /* AppDelegate.swift in Sources */,
+				D7B99D511BDBE08C000DE794 /* RootListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
